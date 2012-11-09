@@ -15,7 +15,7 @@ setup_path=`pwd`
 # sudo useradd blog
 # sudo mkdir /home/blog
 # sudo mkdir /home/blog/log
-# sudo chown -r blog:blog /home/blog
+# sudo chown -R blog:blog /home/blog
 
 # # Clone repo
 # rm -rf ~/blog
