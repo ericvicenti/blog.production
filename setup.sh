@@ -3,6 +3,8 @@ cd `dirname "$0"`
 
 setup_path=`pwd`
 
+HOST=projectopencontent.org
+
 # # Install Dependencies
 # sudo apt-get install python-software-properties
 # sudo add-apt-repository ppa:chris-lea/node.js
@@ -21,21 +23,20 @@ setup_path=`pwd`
 # rm -rf ~/blog
 # git clone git@github.com:ericvicenti/blog.git ~/blog
 
+# # Set up iptables forwarding for HTTPS
+# sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 44300
+# sudo sh -c "iptables-save -c > /etc/iptables.conf"
+
 # # Install configs
-sudo service monit stop
 sudo service blog stop
 
 sudo cp -f $setup_path/upstart.conf /etc/init/blog.conf
 sudo chown root:root /etc/init/blog.conf
 
-sudo cp -f $setup_path/monitrc /etc/monit/monitrc
-sudo chown root:root /etc/monit/monitrc
+sudo cp -f $setup_path/nginx/vhost.conf /etc/nginx/sites-available/$HOST.conf
+sudo chown root:root /etc/nginx/sites-available/$HOST.conf
 
-sudo cp -f $setup_path/nginx/vhost.conf /etc/nginx/sites-available/blog.org.conf
-sudo chown root:root /etc/nginx/sites-available/blog.org.conf
-
-sudo ln -s /etc/nginx/sites-available/blog.org.conf /etc/nginx/sites-enabled/blog.org.conf
+sudo ln -s /etc/nginx/sites-available/$HOST.conf /etc/nginx/sites-enabled/$HOST.conf
 
 sudo service nginx restart
-sudo service monit start
 sudo service blog start

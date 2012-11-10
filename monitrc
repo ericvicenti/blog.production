@@ -25,7 +25,7 @@ set logfile /home/blog/log/monit.log
 
 # This is a must for $ monit status
 set httpd port 2812 and
-    allow blog_monit:blogFTW
+    allow user_name:passw0rd
 
 check system blog.sys
       start "/sbin/start blog" with timeout 60 seconds
@@ -43,7 +43,7 @@ check system blog.sys
 check host blog with address 127.0.0.1
       start "/sbin/start blog" with timeout 60 seconds
       stop "/sbin/stop blog"
-      if failed port 8888 protocol HTTP
+      if failed port 8000 protocol HTTP
         request /
         with timeout 5 seconds
         then restart
