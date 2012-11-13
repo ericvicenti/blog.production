@@ -3,6 +3,8 @@
 # Run this script from anywhere, as somebody who can sudo
 
 path=/home/blog/blog
+keys=/home/blog/keys
+settings=/home/blog/settings.js
 tmp=/tmp/blog
 
 echo 'Cloning repo from github...'
@@ -29,12 +31,6 @@ sudo npm install -l
 echo '...done!'
 echo ''
 
-echo 'Stopping monit...'
-sudo /etc/init.d/monit stop
-sudo monit stop blog
-echo '...done!'
-echo ''
-
 echo 'Stopping app server...'
 sudo stop blog
 echo '...done!'
@@ -42,6 +38,13 @@ echo ''
 
 echo 'Backing up old version...'
 sudo mv $path $path`date +"%Y%m%d%H%M%S"`
+echo '...done!'
+echo ''
+
+echo 'Copying keys and settings...'
+mkdir $tmp/keys
+sudo cp $keys/* $tmp/keys/
+sudo cp $settings $tmp
 echo '...done!'
 echo ''
 
@@ -60,8 +63,3 @@ sudo start blog
 echo '...done!'
 echo ''
 
-echo 'Starting monit...'
-sudo /etc/init.d/monit start
-sudo monit start blog
-echo '...done!'
-echo ''
