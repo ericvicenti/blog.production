@@ -40,6 +40,11 @@ sudo stop blog
 echo '...done!'
 echo ''
 
+echo 'Moving DB...'
+sudo mv $path/data /tmp/blog-data-tmp
+echo '...done!'
+echo ''
+
 echo 'Backing up old version...'
 sudo mv $path $path`date +"%Y%m%d%H%M%S"`
 echo '...done!'
@@ -52,6 +57,11 @@ echo ''
 
 echo 'Switch to latest version...'
 sudo mv $tmp $path
+echo '...done!'
+echo ''
+
+echo 'Moving DB...'
+sudo mv /tmp/blog-data-tmp $path/data
 echo '...done!'
 echo ''
 
